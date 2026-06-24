@@ -1,10 +1,14 @@
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 from typing import Optional
+import sys
+import os
+
+# Add app folder to path so we can import databas
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "app"))
 import database
 
 app = FastAPI(title="Extended School Registration API")
-
 
 database.create_table()
 
@@ -35,7 +39,7 @@ class Course(BaseModel):
 def home():
     return {"message": "Welcome to my updated school server"}
 
-#student end points
+#  STUDENTS 
 @app.get("/students")
 def list_students():
     raw_students = database.get_students()
@@ -60,7 +64,7 @@ def remove_student(student_id: int):
         raise HTTPException(status_code=404, detail="Student not found")
     return {"message": "Student deleted successfully"}
 
-# teachers end point
+#TEACHERS 
 @app.get("/teachers")
 def list_teachers():
     raw_teachers = database.get_teachers()
@@ -85,7 +89,7 @@ def remove_teacher(teacher_id: int):
         raise HTTPException(status_code=404, detail="Teacher not found")
     return {"message": "Teacher deleted successfully"}
 
-#courses end points
+# courses
 @app.get("/courses")
 def list_courses():
     raw_courses = database.get_courses()
