@@ -4,7 +4,7 @@ from typing import Optional
 import sys
 import os
 
-# Add app folder to path so we can import databas
+# Add app folder to path so we can import database
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "app"))
 import database
 
